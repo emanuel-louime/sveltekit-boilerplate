@@ -23,9 +23,7 @@ import img18 from '$lib/images/IMG_20230805_135427_933.jpg';
 import img19 from '$lib/images/IMG_20230805_135427_991.jpg';
 import img20 from '$lib/images/Screenshot_20230318_132839_Snapchat.jpg'; 
 
-const images: any[] = [img0, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, ];
-
 export const load:PageLoad = ({params}) => {
 
-    return {images: images};
+    return {list: list};
 }

@@ -10,12 +10,20 @@
 
     const mouse_pos: any[] = [];
 
-	let focus: any = "";
+	let body: HTMLBodyElement; 
+	let container:HTMLDivElement;
+	let intro: HTMLDivElement;
 
     let clientWidth: number;
     let clientHeight: number;
+
+	let focus: String | null = null;
     
-	function collision() {
+	const sleep = (delay:number) => {
+		return new Promise(resolve => setTimeout(resolve, delay));
+	}
+
+	async function collision(callback: any) {
 		const distance = (
 			p1: {x: number, y: number, r: number, },
 			p2: {x: number, y: number, r: number, }) => {
@@ -26,29 +34,34 @@
 				return (dist > 0) ? {y: y ** 0.5 * Math.sin(angle), x:  x ** 0.5 * Math.cos(angle)} : false;
 		};
 
-		for(let i = 0; i < curr_pos.length ; i++) {
-			for(let j = curr_pos.length - 1; j > 0; j--) {
-				if(i != j) {
-					let dist = distance(curr_pos[i], curr_pos[j]); 
-					if(dist) {
-						if(curr_pos[i].x > curr_pos[j].x){
-							set_pos[i].x = curr_pos[i].x + dist.x / 4;
-							set_pos[j].x = curr_pos[j].x - dist.x / 4;
-						} else {
-							set_pos[i].x = curr_pos[i].x - dist.x / 4;
-							set_pos[j].x = curr_pos[j].x + dist.x / 4;
+		if(!focus) {
+			for(let i = 0; i < curr_pos.length ; i++) {
+				for(let j = 0;  j < curr_pos.length; j++) {
+					if(i != j) {
+						let dist = distance(curr_pos[i], curr_pos[j]); 
+						if(dist) {
+							if(curr_pos[i].x > curr_pos[j].x){
+								set_pos[i].x += dist.x / 4;
+								set_pos[j].x -= dist.x / 4;
+							} else {
+								set_pos[i].x -= dist.x / 4;
+								set_pos[j].x += dist.x / 4;
 
-						}
-						if(curr_pos[i].y > curr_pos[j].y){
-							set_pos[i].y = curr_pos[i].y + dist.y / 4;
-							set_pos[j].y = curr_pos[j].y - dist.y / 4;
-						} else {
-							set_pos[i].y = curr_pos[i].y - dist.y / 4;
-							set_pos[j].y = curr_pos[j].y + dist.y / 4;
+							}
+							if(curr_pos[i].y > curr_pos[j].y){
+								set_pos[i].y += dist.y / 4;
+								set_pos[j].y -= dist.y / 4;
+							} else {
+								set_pos[i].y -= dist.y / 4;
+								set_pos[j].y += dist.y / 4;
+							}
 						}
 					}
 				}
 			}
+			sleep(10).then(() => {callback(collision)});
+		} else {
+			sleep(300).then(()=> {callback(collision)})
 		}
 	}
 
@@ -61,14 +74,35 @@
         }
     }
 
-	let coll_int;
+    function toggleFocus(event: CustomEvent) {
+        if(!focus) {
+            focus ;
+        } else {
+            focus = null;
+        }
+	}
+	
+    const hideCapKey:Keyframe[] =[
+        {
+            opacity: 1,
+            offset: 0.00
+        },
+        {
+            opacity: 1,
+            offset: 0.01
+        },
+        {
+            opacity: 0,
+            offset: 1.00
+        },
+    ];
+
+	setTimeout(collision, 500, collision);
 	setTimeout(()=>{
-		coll_int = setInterval(collision, 200);
-	}, 1000)
-
-	let body: HTMLElement;
-
-	$: bg_style = `width: ${ clientWidth }px; height: ${ clientHeight }px; background-image`
+		intro.animate(hideCapKey, 500).finished.then(()=>{
+			intro.style.opacity = '0';
+		});
+	}, 10000);
 
 </script>
 
@@ -81,37 +115,63 @@
 
 <svelte:body bind:this={body} on:mousemove={getMousePos}></svelte:body>
 
-
-<div class="container">
-	$: <div class="bg" style={bg_style}><img src={focus} alt=""></div>	
-	{#each data.images as img, index}
-		<Node 
-			img="{img}" 
-			bind:curr_pos={curr_pos[index]} 
-			bind:set_pos={set_pos[index]}
-			mouse_pos={mouse_pos} 
-			bind:clientHeight={clientHeight} 
-			bind:clientWidth={clientWidth}
-			on:mouseenter={()=>{
-				focus = img;
-				console.log(img);
-			}}
-			>
+<div bind:this={container} class="container">
+</div>
+<div>
+	{#each data.list as item, index}
+			<Node  
+				img="{item.file}" 
+				date="{item.date}" 
+				cap="{item.cap}" 
+				bind:curr_pos={curr_pos[index]} 
+				bind:set_pos={set_pos[index]}
+				mouse_pos={mouse_pos} 
+				bind:focus={focus}
+				bind:clientHeight={clientHeight} 
+				bind:clientWidth={clientWidth}
+				bind:container={container}
+				>
 		</Node>
 	{/each}
 </div>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="intro" bind:this={intro}>
+	<h1>'a piece of manny louime'</h1>
+	<h2>click on any image</h2>
+</div>
+
 <style>
 	:global(body) {
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
 		background-color: black;
-	}
-
-	.bg {
-		position: absolute;
-		overflow: hidden;
 	}
 
 	:global(body::-webkit-scrollbar) {
 		 display: none;
+	}
+
+	.container {
+		position: absolute;
+		top: -10px; 
+		left: -10px;
+		width: 110vw;
+		height: 110vh;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		filter:blur(8px);
+	}
+
+	.intro {
+		position: relative;
+		color: antiquewhite;
+		width: 100%;
+		height: 100%;
+		margin-top: 20%;
+		margin-bottom: 50%;
+		text-align: center;
+		z-index: 2;
 	}
 </style>
