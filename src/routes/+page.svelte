@@ -12,7 +12,7 @@
 
 	let body: HTMLBodyElement; 
 	let container:HTMLDivElement;
-	let intro: HTMLDivElement;
+	let intro: HTMLDivElement|null;
 
     let clientWidth: number;
     let clientHeight: number;
@@ -99,8 +99,9 @@
 
 	setTimeout(collision, 500, collision);
 	setTimeout(()=>{
-		intro.animate(hideCapKey, 500).finished.then(()=>{
-			intro.style.opacity = '0';
+		intro?.animate(hideCapKey, 500).finished.then(()=>{
+			if(intro)
+				intro.style.opacity = '0';
 		});
 	}, 10000);
 
