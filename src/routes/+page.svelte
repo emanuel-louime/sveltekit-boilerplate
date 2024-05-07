@@ -74,14 +74,6 @@
         }
     }
 
-    function toggleFocus(event: CustomEvent) {
-        if(!focus) {
-            focus ;
-        } else {
-            focus = null;
-        }
-	}
-	
     const hideCapKey:Keyframe[] =[
         {
             opacity: 1,
@@ -100,8 +92,10 @@
 	setTimeout(collision, 500, collision);
 	setTimeout(()=>{
 		intro?.animate(hideCapKey, 500).finished.then(()=>{
-			if(intro)
+			if(intro) {
 				intro.style.opacity = '0';
+				intro.style.zIndex = '0';
+			}
 		});
 	}, 10000);
 

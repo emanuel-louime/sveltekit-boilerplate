@@ -87,8 +87,8 @@ export const list = [{
     },
     {
         file: img13,
-        date: "i cried in this meadow.", 		
-		cap: "joyful and cathartic"
+        date: "joyful and cathartic", 		
+		cap: "i cried in this meadow."
     },
     {
         file: img14,

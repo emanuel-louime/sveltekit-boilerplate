@@ -230,7 +230,7 @@
 
 </script>
 
-<div on:mouseenter={mouseMove} on:mouseleave={mouseLeave} on:click={toggleFocus} {style}>
+<div on:mouseenter={mouseMove} on:mouseleave={mouseLeave} on:click={toggleFocus} on:keypress={()=>{}} {style}>
     <img src="{img}" alt="" >
     <p class="date" bind:this={caption[0]}>{date}</p>
     <p bind:this={caption[1]}>{cap}</p>
@@ -254,10 +254,10 @@
     p {
         position: absolute;
         color: antiquewhite;
-        font-size: 32px;
+        font-size: 200%;
         width: 100%;
         text-align: center;
-        bottom: 0;
+        bottom: 0%;
         z-index: 4;
         opacity: 0;
         scale: 0;
@@ -265,6 +265,7 @@
     }
 
     .date {
-        bottom: 64px;
+        bottom: -10%;
     }
+
 </style>
