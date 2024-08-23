@@ -1,36 +1,6 @@
-# SvelteKit Demo app
+# ECO ID
+## BIOL1440: Sustaining the Biosphere Final Project
 
-The official demo app for SvelteKit, hosted on Vercel.
+This website was created for was created as my (Emanuel Louime) final project for the Boston College course, Sustaining the Biosphere. It is an interactive digital scrapbook meant to showcase my values, priorities, and personality at the time of creation. It consists of floating images which react to the cursor and collisions with eachother. Clicking on an image brings it into focus and reveals its caption. The website was designed and tested for desktop and primarily Google Chrome. It was built with [SvelteKit](https://kit.svelte.dev/). -- a full stack web development framework--- and written in typescript, html, and CSS-- three classics of web design. The site is being hosted on [Vercel](https://vercel.com/) with a hobby developer account. The favicon in the toolbar is the Mountain Laurel, Connecticut's State flower and a meaningful reminder of the joy the outdoors give me, the outdoors role in my personal formation, and the transcendental and intimate approach I hope to take in considering the role I and my natural environment play. 
 
-## Deploy Your Own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fvercel%2Ftree%2Fmain%2Fexamples%2Fsveltekit-1&project-name=sveltekit-vercel&repository-name=sveltekit-vercel&demo-title=SvelteKit%20%2B%20Vercel&demo-url=https%3A%2F%2Fsveltekit-template.vercel.app%2F)
-
-_Live Example: https://sveltekit-template.vercel.app_
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-## Speed Insights
-
-Once deployed on Vercel, you can benefit from [Speed Insights](https://vercel.com/docs/concepts/speed-insights) simply by navigating to Vercel's dashboard, clicking on the 'Speed Insights' tab, and enabling the product.
-
-You will get data once your application will be re-deployed and will receive visitors.
+[Link to Website](https://sveltekit-boilerplate-ten-iota.vercel.app/) 
